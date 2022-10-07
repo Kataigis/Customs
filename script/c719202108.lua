@@ -1,5 +1,5 @@
 --Supercell Styvermaz Beaufort
---Sigma
+--Kataigis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
