@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.scon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.stg)
 	e1:SetOperation(s.sop)
 	c:RegisterEffect(e1)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost, s.spcost)
+	e2:SetCost(s.rcost)
 	e2:SetTarget(s.rtg)
 	e2:SetOperation(s.rop)
 	c:RegisterEffect(e2)
@@ -36,7 +36,7 @@ s.listed_series={0x2016}
 function s.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND)
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,0))
@@ -75,6 +75,11 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rfilter(c,e,tp)
 	return c:IsSetCard(0x2016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK)) and not c:IsCode(id)
+end
+function s.rcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
+	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.rtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.rfilter(chkc,e,tp) end
