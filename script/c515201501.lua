@@ -77,8 +77,7 @@ function s.thfilter(c,lv)
 	return c:IsSetCard(0x2016) and c:IsAbleToHand() and c:GetLevel()==lv
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e:GetHandler(),e,tp) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e:GetHandler(),e,tp)
+	if chk==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local lv=Duel.AnnounceLevel(tp,1,12)
 	e:SetLabel(lv)
