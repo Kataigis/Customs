@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 	--Tuner
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_TUNER)
-	e3:SetValue(s.ntval)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_SINGLE)
+	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e3:SetRange(LOCATION_MZONE)
+	--e3:SetCode(EFFECT_TUNER)
+	--e3:SetValue(s.ntval)
+	--c:RegisterEffect(e3)
 end
 s.listed_series={0x2016}
 s.listed_names={id}
