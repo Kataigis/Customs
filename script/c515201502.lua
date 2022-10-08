@@ -53,7 +53,7 @@ function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp) and c:IsRace(RACE_MACHINE,scard,sumtype,tp)
+	return c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp) and c:IsRace(RACE_MACHINE,scard,sumtype,tp) and not (c:IsType(TYPE_XYZ) or c:IsType(TYPE_LINK))
 end
 function s.sfilter(c)
 	return c:IsSpellTrap() and c:IsSetCard(0x2016) and c:IsAbleToHand()
@@ -74,7 +74,7 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c,e,tp)
-	return c:IsSetCard(0x2016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK))
+	return c:IsSetCard(0x2016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK)) and not c:IsCode(id)
 end
 function s.rtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.rfilter(chkc,e,tp) end
