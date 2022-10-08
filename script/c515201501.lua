@@ -73,7 +73,7 @@ end
 function s.filter(c)
 	return c:IsSetCard(0x2016) and c:HasLevel() and c:IsAbleToHand()
 end
-function s.thfilter(c)
+function s.thfilter(c,lv)
 	return c:IsSetCard(0x2016) and c:IsAbleToHand() and c:GetLevel()==lv
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
