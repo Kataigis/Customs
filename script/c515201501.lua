@@ -79,7 +79,7 @@ function s.thfilter(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil)
-	if chk==0 then return Duel.IsExistingMatchingCard((s.thfilter,tp,LOCATION_EXTRA,0,1,nil,g,e,tp)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil,g,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	e:SetLabel(Duel.AnnounceLevel(tp,1,12))
