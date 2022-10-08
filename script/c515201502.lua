@@ -52,7 +52,7 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x2016) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(0x2016) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.rtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.rfilter(chkc) end
