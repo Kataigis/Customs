@@ -16,9 +16,7 @@ function s.initial_effect(c)
 	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.thcon)
@@ -29,7 +27,7 @@ end
 s.listed_series={0x2016}
 s.listed_names={id}
 function s.spcfilter(c)
-	return c:IsSetCard(0x2016) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -48,25 +46,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	--Can only attack with 1 monster this turn
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetCondition(function(e) return e:GetLabel()~=0 end)
-	e1:SetTarget(function(e,c) return c:GetFieldID()~=e:GetLabel() end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetLabelObject(e1)
-	e2:SetOperation(s.checkop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e2,tp)
-	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,2))
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=eg:GetFirst():GetFieldID()
