@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_TUNER)
+	e3:SetValue(s.ntval)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x2016}
@@ -95,4 +96,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
+end
+function s.ntval(c,sc,tp)
+	return sc and sc:IsAttribute(ATTRIBUTE_WIND)
 end
