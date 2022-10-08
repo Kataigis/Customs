@@ -76,10 +76,17 @@ end
 function s.rfilter(c,e,tp)
 	return c:IsSetCard(0x2016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_LINK)) and not c:IsCode(id)
 end
+function s.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x2016) and c:IsAbleToDeckAsCost() and not c:IsCode(id)
+end
 function s.rcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) end
+	if chk==0 then return s.cost(e,tp,eg,ep,ev,re,r,rp,0) and aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0) 
+		and (Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_REMOVED,0,1,nil)) end
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,1)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.rtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.rfilter(chkc,e,tp) end
