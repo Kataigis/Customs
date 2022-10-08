@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x132}
+s.listed_series={0x2016}
 s.listed_names={id}
 function s.spcfilter(c)
-	return c:IsSetCard(0x132) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(0x2016) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -73,13 +73,13 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.thcfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x132) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(0x2016) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x132) and c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
