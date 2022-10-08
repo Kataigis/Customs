@@ -71,10 +71,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.filter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:HasLevel() and c:IsAbleToHand()
+	return c:IsSetCard(0x2016) and c:HasLevel() and c:IsAbleToHand()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:GetLevel()==lv
+	return c:IsSetCard(0x2016) and c:IsAbleToHand() and c:GetLevel()==lv
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e:GetHandler(),e,tp) end
