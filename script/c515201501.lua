@@ -23,13 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 	--Tuner
-	--local e3=Effect.CreateEffect(c)
-	--e3:SetType(EFFECT_TYPE_SINGLE)
-	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	--e3:SetRange(LOCATION_MZONE)
-	--e3:SetCode(EFFECT_TUNER)
-	--e3:SetValue(s.ntval)
-	--c:RegisterEffect(e3)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetValue(s.ntval)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x2016}
 s.listed_names={id}
@@ -77,7 +76,8 @@ function s.thfilter(c,lv)
 	return c:IsSetCard(0x2016) and c:IsAbleToHand() and c:GetLevel()==lv
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e:GetHandler(),e,tp) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e:GetHandler(),e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local lv=Duel.AnnounceLevel(tp,1,12)
 	e:SetLabel(lv)
@@ -102,5 +102,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ntval(c,sc,tp)
-	return sc and sc:IsAttribute(ATTRIBUTE_WIND)
+	if sc and sc:IsAttribute(ATTRIBUTE_WIND)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_ADD_TYPE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(TYPE_TUNER)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		c:RegisterEffect(e1)
+	end
 end
