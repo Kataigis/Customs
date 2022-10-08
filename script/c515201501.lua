@@ -70,7 +70,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	local lv=e:GetHandler():GetLevel()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	e:SetLabel(Duel.AnnounceLevel(tp,1,8,lv))
+	e:SetLabel(Duel.AnnounceLevel(tp,1,8))
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
