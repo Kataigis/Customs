@@ -56,7 +56,7 @@ function s.matfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND,scard,sumtype,tp) and c:IsRace(RACE_MACHINE,scard,sumtype,tp) and not (c:IsType(TYPE_XYZ) or c:IsType(TYPE_LINK))
 end
 function s.sfilter(c)
-	return c:IsSpellTrap() and c:ListsSeries(0x2016) and c:IsAbleToHand()
+	return c:IsSpellTrap() and (c.listed_series=={0x2016}) and c:IsAbleToHand()
 end
 function s.scon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
