@@ -63,7 +63,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=eg:GetFirst():GetFieldID()
 	e:GetLabelObject():SetLabel(fid)
 end
-end
 function s.thfilter(c)
 	return c:IsSetCard(0x2016) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
