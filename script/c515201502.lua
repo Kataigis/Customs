@@ -51,7 +51,7 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.rfilter(c)
+function s.rfilter(c,e,tp)
 	return c:IsSetCard(0x2016) and (c:IsType(TYPE_LINK) or c:IsType(TYPE_SYNCHRO))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
