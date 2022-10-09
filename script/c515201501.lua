@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 	--Tuner
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_ADD_TYPE)
-	e3:SetCondition(s.ntval)
-	e3:SetValue(TYPE_TUNER)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_SINGLE)
+	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e3:SetRange(LOCATION_MZONE)
+	--e3:SetCode(EFFECT_ADD_TYPE)
+	--e3:SetCondition(s.ntval)
+	--e3:SetValue(TYPE_TUNER)
+	--c:RegisterEffect(e3)
 end
 s.listed_series={0x2016}
 s.listed_names={id}
@@ -103,6 +103,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.ntval(c,sc,tp)
-	return sc and sc:IsAttribute(ATTRIBUTE_WIND)
-end
+--function s.ntval(c,sc,tp)
+	--return sc and sc:IsAttribute(ATTRIBUTE_WIND)
+--end
