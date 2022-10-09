@@ -102,7 +102,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ntval(c,sc,tp)
-	if sc and sc:IsAttribute(ATTRIBUTE_WIND)
+	if sc and sc:IsAttribute(ATTRIBUTE_WIND) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
