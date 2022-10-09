@@ -94,7 +94,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local gss=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e:GetLabel())
 		if #gss>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,lv)
+			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e:GetLabel())
 			if #g>0 then
 				Duel.SendtoHand(g,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g)
