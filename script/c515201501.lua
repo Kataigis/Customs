@@ -110,4 +110,5 @@ function s.ntval(c,sc,tp)
 		e1:SetValue(TYPE_TUNER)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
+	end
 end
