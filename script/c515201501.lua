@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_ADD_TYPE)
-	e3:SetValue(TYPE_TUNER,s.ntval)
+	e3:SetValue(s.ntval)
 	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e3)
 end
@@ -102,5 +102,12 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ntval(c,sc,tp)
-	return sc and sc:IsAttribute(ATTRIBUTE_WIND)
+	if sc and sc:IsAttribute(ATTRIBUTE_WIND) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_ADD_TYPE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(TYPE_TUNER)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		c:RegisterEffect(e1)
 end
