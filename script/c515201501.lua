@@ -71,10 +71,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=eg:GetFirst():GetFieldID()
 	e:GetLabelObject():SetLabel(fid)
 end
-function s.filter1(c)
-	return c:IsSetCard(0x2016) and c:HasLevel() and c:IsAbleToHand()
-end
-function s.filter2(c,lv)
+function s.filter1(c,lv)
 	return c:IsSetCard(0x2016) and c:IsAbleToHand() and c:GetLevel()==lv
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -94,15 +91,15 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 		
-		--local gss=Duel.GetMatchingGroup(s.filter1,tp,LOCATION_GRAVE,0,nil,g:GetFirst():GetCode(),e,tp)
-		--if #gss>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			--local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-			--if #g>0 then
-				--Duel.SendtoHand(g,nil,REASON_EFFECT)
-				--Duel.ConfirmCards(1-tp,g)
-			--end
-		--end
+		local gss=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e:GetLabel())
+		if #gss>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,lv)
+			if #g>0 then
+				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g)
+			end
+		end
 	end
 end
 --function s.ntval(c,sc,tp)
