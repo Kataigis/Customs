@@ -4,7 +4,6 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from the hand
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -15,6 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Search
 	local e2=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,3))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -24,12 +24,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Tuner
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_ADD_TYPE)
-	e3:SetValue(s.ntval)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetDescription(aux.Stringid(id,4))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetLocation(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetOperation(s.tnop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x2016}
@@ -101,14 +100,15 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.ntval(c,sc,tp)
-	if sc and sc:IsAttribute(ATTRIBUTE_WIND) then
+function s.tnop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
