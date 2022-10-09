@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_ADD_TYPE)
-	e3:SetValue(TYPE_TUNER, s.ntval)
+	e3:SetValue(TYPE_TUNER,s.ntval)
 	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e3)
 end
