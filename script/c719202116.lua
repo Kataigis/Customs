@@ -109,8 +109,11 @@ function s.spact(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
+function s.stormfilter(c)
+	return c:IsFaceup() and c:IsCode(719202113)
+end
 function s.tgcon(e,c)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.tglimit(e,c)
 	return c~=e:GetHandler()
