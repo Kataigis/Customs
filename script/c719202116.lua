@@ -110,7 +110,7 @@ function s.spact(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.tgcon(e,c)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tglimit(e,c)
 	return c~=e:GetHandler()
