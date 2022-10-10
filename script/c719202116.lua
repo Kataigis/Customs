@@ -94,12 +94,6 @@ function s.spact(e,tp,eg,ep,ev,re,r,rp)
 		sg:AddCard(tuner)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		Duel.SpecialSummonStep(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sc:RegisterEffect(e1,true)
-		sc:CompleteProcedure()
 	end
 	Duel.SpecialSummonComplete()
 end
