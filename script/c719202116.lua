@@ -25,6 +25,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spact)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
+	--Attack magnet
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e3:SetCondition(s.tgcon)
+	e3:SetTarget(s.tglimit)
+	e3:SetValue(1)
+	c:RegisterEffect(e3)
 end
 s.listed_series={0x917}
 function s.matfilter(c,lc,stype,tp)
@@ -97,4 +108,10 @@ function s.spact(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP,zone)
 	end
 	Duel.SpecialSummonComplete()
+end
+function s.tgcon(e,c)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil)
+end
+function s.tglimit(e,c)
+	return c~=e:GetHandler()
 end
