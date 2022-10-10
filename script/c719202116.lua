@@ -51,9 +51,9 @@ function s.bnop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.spfilter1(c,e,tp)
+function s.spfilter1(c,e,tp,zone)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x917) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+	return c:IsSetCard(0x917) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false,POS_FACEUP,tp,zone)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp,c)
 end
 function s.rescon(tuner,scard)
@@ -81,6 +81,7 @@ function s.sptgt(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spact(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
+	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
 	if #pg>0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g1=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
@@ -93,7 +94,7 @@ function s.spact(e,tp,eg,ep,ev,re,r,rp)
 		local sg=aux.SelectUnselectGroup(rg,e,tp,1,1,s.rescon(tuner,sc),1,tp,HINTMSG_REMOVE,s.rescon(tuner,sc))
 		sg:AddCard(tuner)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
-		Duel.SpecialSummonStep(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummonStep(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP,zone)
 	end
 	Duel.SpecialSummonComplete()
 end
