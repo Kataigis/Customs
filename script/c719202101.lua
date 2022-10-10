@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 --condition for special summoning - only during the main phase, if you control the archetypal field spell (719202113) and this card is banished
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FilterFaceupFunction(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsMainPhase()
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsMainPhase()
 end
 --cost - banish 1 archetypal (0x917) card from your hand, field, or gy
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
