@@ -61,12 +61,6 @@ function s.bnop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
-function s.spfilter1(c,e,tp,zone)
-	local lv=c:GetLevel()
-	return c:IsSetCard(0x917) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false,POS_FACEUP,tp,zone)
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp,c)
-end
 function s.rescon(tuner,scard)
 	return	function(sg,e,tp,mg)
 				sg:AddCard(tuner)
@@ -75,6 +69,11 @@ function s.rescon(tuner,scard)
 				sg:RemoveCard(tuner)
 				return res
 			end
+end
+function s.spfilter1(c,e,tp,zone)
+	local lv=c:GetLevel()
+	return c:IsSetCard(0x917) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false,POS_FACEUP,tp,zone)
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp,c)
 end
 function s.spfilter2(c,tp,sc)
 	local rg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,c)
