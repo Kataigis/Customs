@@ -7,20 +7,6 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Fusion Summon
-	local params={aux.FilterBoolFunction(Card.IsLevelAbove,8)}
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
-	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-						if not e:GetHandler():IsRelateToEffect(e) then return end
-						Fusion.SummonEffOP(table.unpack(params))(e,tp,eg,ep,ev,re,r,rp)
-					end)
-	c:RegisterEffect(e2)
 	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
