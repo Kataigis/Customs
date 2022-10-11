@@ -1,0 +1,11 @@
+{
+	"repos": [
+		{
+			"url": "https://github.com/Kataigis/Customs",
+			"repo_name": "Kataigis' Customs",
+			"repo_path": "./repositories/customcards",
+			"should_update": true,
+			"should_read": true
+		}
+	]
+}
