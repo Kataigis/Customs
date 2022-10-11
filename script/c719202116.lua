@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.bntgt)
+	e1:SetTarget(s.bntg)
 	e1:SetOperation(s.bnop)
 	c:RegisterEffect(e1)
 	--Synchro Summon
@@ -21,8 +21,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.sptgt)
-	e2:SetOperation(s.spact)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spac)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 	--Attack magnet
@@ -45,7 +45,7 @@ end
 function s.tgfilter(c)
 	return c:IsSetCard(0x917) and c:IsFaceup()
 end
-function s.bntgt(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.bntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil) end
 	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_REMOVED,0,nil)
@@ -83,13 +83,13 @@ end
 function s.spfilter3(c)
 	return c:HasLevel() and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
-function s.sptgt(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
 		return #pg<=0 and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.spact(e,tp,eg,ep,ev,re,r,rp)
+function s.spac(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_SYNCHRO)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	if #pg>0 then return end
