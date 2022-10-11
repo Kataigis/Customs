@@ -78,7 +78,7 @@ end
 function s.spfilter2(c,tp,sc)
 	local rg=Duel.GetMatchingGroup(s.spfilter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,c)
 	return c:IsType(TYPE_TUNER) and c:IsSetCard(0x917) and c:IsAbleToRemove() and aux.SpElimFilter(c,true) 
-		and aux.SelectUnselectGroup(rg,e,tp,nil,2,s.rescon(c,sc),0)
+		and aux.SelectUnselectGroup(rg,e,tp,nil,1,s.rescon(c,sc),0)
 end
 function s.spfilter3(c)
 	return c:HasLevel() and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
