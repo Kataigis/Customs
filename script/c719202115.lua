@@ -68,7 +68,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
 function s.posfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsPosition(POS_FACEUP_ATTACK)
+	return c:IsControler(1-tp) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
 end
 function s.poscd(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,719202113),tp,LOCATION_ONFIELD,0,1,nil) and not eg:IsContains(e:GetHandler()) and eg:IsExists(s.posfilter,1,nil,tp)
