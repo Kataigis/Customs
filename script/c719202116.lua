@@ -105,6 +105,7 @@ function s.spac(e,tp,eg,ep,ev,re,r,rp)
 		sg:AddCard(tuner)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		Duel.SpecialSummonStep(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP,zone)
+		sc:CompleteProcedure()
 	end
 	Duel.SpecialSummonComplete()
 end
