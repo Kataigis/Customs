@@ -13,28 +13,24 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	--monster
-	e2:SetCategory(set) --what it does
-	e2:SetProperty() --maybe none? targets and stuff
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode() --trigger
+	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCondition(s.moncon)
 	e2:SetTarget(s.montg)
 	e2:SetOperation(s.monop)
 	c:RegisterEffect(e2)
 	--spell
-	e3:SetCategory(banish from gy)
-	e3:SetProperty()
+	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode()
+	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 	--trap
-	e4:SetCategory(special summon)
-	e4:SetProperty()
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode()
+	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetCondition(s.trcon)
 	e4:SetTarget(s.trtg)
 	e4:SetOperation(s.trop)
@@ -50,7 +46,6 @@ function s.initial_effect(c)
 	e5:SetOperation(s.recop)
 	c:RegisterEffect(e5)
 end
-
 function s.cfilter(c,tp,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:GetPreviousSetCard()&0x917==0
 		and (c:IsReason(REASON_BATTLE) or (rp==1-tp and c:IsReason(REASON_EFFECT)))
@@ -58,8 +53,38 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,rp)
 end
+function s.target()
+	return
+end
 
 
+function s.moncon()
+	return
+end
+function s.montg()
+	return
+end
+function s.monop()
+	return
+end
+function s.spcon()
+	return
+end
+function s.sptg()
+	return
+end
+function s.spop()
+	return
+end
+function s.trcon()
+	return
+end
+function s.trtg()
+	return
+end
+function s.trop()
+	return
+end
 
 function s.recfilter(c)
 	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSetCard(0x917) and c:IsAbleToHand() and not c:IsCode(id) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
