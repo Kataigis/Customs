@@ -12,16 +12,43 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--recur
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_RECOVER)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_REMOVE)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.rectg)
-	e2:SetOperation(s.recop)
+	--monster
+	e2:SetCategory(set) --what it does
+	e2:SetProperty() --maybe none? targets and stuff
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode() --trigger
+	e2:SetCondition()
+	e2:SetTarget()
+	e2:SetOperation()
 	c:RegisterEffect(e2)
+	--spell
+	e3:SetCategory(banish from gy)
+	e3:SetProperty()
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode()
+	e3:SetCondition()
+	e3:SetTarget()
+	e3:SetOperation()
+	c:RegisterEffect(e3)
+	--trap
+	e4:SetCategory(special summon)
+	e4:SetProperty()
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e4:SetCode()
+	e4:SetCondition()
+	e4:SetTarget()
+	e4:SetOperation()
+	c:RegisterEffect(e4)
+	--recur
+	local e5=Effect.CreateEffect(c)
+	e5:SetCategory(CATEGORY_RECOVER)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e5:SetCode(EVENT_REMOVE)
+	e5:SetProperty(EFFECT_FLAG_DELAY)
+	e5:SetCountLimit(1,{id,1})
+	e5:SetTarget(s.rectg)
+	e5:SetOperation(s.recop)
+	c:RegisterEffect(e5)
 end
 
 function s.cfilter(c,tp,rp)
@@ -31,6 +58,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,rp)
 end
+
 
 
 function s.recfilter(c)
