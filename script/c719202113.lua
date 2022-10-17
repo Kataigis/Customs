@@ -14,7 +14,6 @@ function s.initial_effect(c)
 	--Atk boost
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
@@ -79,7 +78,7 @@ function s.acfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x917) and c:IsAbleToRemove()
 end
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x917) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0x917)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfil,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*100
