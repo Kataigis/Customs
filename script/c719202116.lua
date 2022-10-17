@@ -21,9 +21,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,{id,1})
+	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spac)
-	e2:SetHintTiming(0,TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e2)
 	--Attack magnet
 	local e3=Effect.CreateEffect(c)
@@ -82,6 +83,9 @@ function s.spfilter2(c,tp,sc)
 end
 function s.spfilter3(c)
 	return c:HasLevel() and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
+end
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsMainPhase()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
