@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x105}
 function s.rmfilter(c)
-	return c:IsSetCard(0x105) and c:IsAbleToRemove()
+	return c:IsSetCard(0x105) and c:IsAbleToRemove() and not c:IsCode(id)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
