@@ -48,14 +48,11 @@ function s.srop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function s.effilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x105) and c:IsControler(tp)
-end
-function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(s.effilter,1,nil,tp)
+function s.rmcfilter(c,tp)
+	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x105) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp and Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
+	return eg and eg:IsExists(s.rmcfilter,1,e:GetHandler(),tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
