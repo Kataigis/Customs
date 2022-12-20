@@ -13,6 +13,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.bntg)
 	e1:SetOperation(s.bnop)
 	c:RegisterEffect(e1)
+	--Return 1 card the opponent controls to the hand
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_REMOVE)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCountLimit(1,id)
+	e2:SetTarget(s.rettg)
+	e2:SetOperation(s.retop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x105}
 
@@ -48,11 +58,22 @@ function s.bnop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_PHASE+PHASE_END)
 			e1:SetLabelObject(rc)
 			e1:SetCountLimit(1)
-			e1:SetOperation(s.retop)
+			e1:SetOperation(s.tempop)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
+function s.tempop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
+end
+function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_ONFIELD)
+end
+function s.retop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
 end
