@@ -55,24 +55,22 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
 end
 function s.setfilter(c)
-	return c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSSetable()
+	return c:IsSpellTrap() and not c:IsType(TYPE_FIELD) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsSSetable() and c:IsSetCard(0x105)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
-	if #g>0 then
-		--Set 1 of your spells/traps, that is banished or in GY
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SSet(tp,sg)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local tc=g:GetFirst()
+	if tc then
+		Duel.SSet(tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		sg:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end
