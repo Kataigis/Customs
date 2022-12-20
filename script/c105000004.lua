@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={105}
+s.listed_series={0x105}
 function s.rmfilter(c)
-	return c:IsSetCard(105) and c:IsAbleToRemove()
+	return c:IsSetCard(0x105) and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
