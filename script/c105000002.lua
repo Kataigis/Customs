@@ -49,7 +49,9 @@ function s.srop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.rmcfilter(c,tp)
-	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x105) and c:IsPreviousControler(tp)
+	local ph=Duel.GetCurrentPhase()
+	return c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x105) and c:IsPreviousControler(tp) and 
+		Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) 
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.rmcfilter,1,e:GetHandler(),tp)
