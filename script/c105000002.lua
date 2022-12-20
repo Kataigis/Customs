@@ -55,7 +55,7 @@ function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.effilter,1,nil,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp
+	return s.effcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp and Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
