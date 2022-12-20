@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
 end
+s.listed_series={105}
 function s.rmfilter(c)
 	return c:IsSetCard(105) and c:IsAbleToRemove()
 end
