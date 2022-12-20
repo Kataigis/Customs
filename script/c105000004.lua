@@ -1,5 +1,5 @@
 --Paradigmetaphys
---Scripted by Kataigis
+--Kataigis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
