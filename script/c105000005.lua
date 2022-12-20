@@ -23,7 +23,7 @@ function s.bncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.bnfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end
 	local maxtc=Duel.GetTargetCount(nil,tp,0,LOCATION_MZONE,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.bnfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,maxtc,nil)
+	local g=Duel.SelectMatchingCard(tp,s.bnfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,maxtc,e:GetHandler())
 	local cg=Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(cg)
 end
