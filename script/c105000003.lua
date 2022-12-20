@@ -42,12 +42,12 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.cfilter(c)
-	return c:IsSetCode(0x105) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x105) and c:IsAbleToRemoveAsCost()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,3,e:GetHandler())
+	local cg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,99,e:GetHandler())
 	Duel.Remove(cg,POS_FACEUP,REASON_COST)
 	e:SetLabel(#cg)
 end
