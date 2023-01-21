@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x120}
+s.listed_series={0x749}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x120) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(0x749) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end
