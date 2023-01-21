@@ -34,7 +34,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp	and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x749) and c:Is and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(0x749) and c:IsAbleToHandAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
