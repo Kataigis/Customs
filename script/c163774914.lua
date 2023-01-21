@@ -43,14 +43,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsDisabled() end
+	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
 end
-
-
 function s.thfilter(c)
 	return c:IsSetCard(0x749) and c:IsAbleToHand()
 end
