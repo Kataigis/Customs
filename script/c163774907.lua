@@ -21,8 +21,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x749}
 function s.thfilter(c)
-	return c:IsAbleToHand() and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA))
-		and (c:IsSetCard(0x749) and c:IsMonster()))
+	c:IsSetCard(0x749) and c:IsMonster()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
