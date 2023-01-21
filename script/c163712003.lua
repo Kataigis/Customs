@@ -28,5 +28,5 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+	Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
 end
