@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if gc>0 and g:FilterCount(Card.IsAbleToRemove,nil)==gc then
 		local oc=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		if oc>0 then
-			Duel.SendtoHand(og,p,REASON_EFFECT)
+			Duel.SendtoHand(oc,p,REASON_EFFECT)
 		end
 	end
 end
