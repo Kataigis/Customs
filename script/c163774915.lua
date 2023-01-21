@@ -3,7 +3,16 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_ATTACK+TIMING_BATTLE_START)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
+	c:RegisterEffect(e1)
 	--recovery
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -20,7 +29,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x749}
-
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local gc=#g
+	if chk==0 then return gc>0 and g:FilterCount(Card.IsAbleToRemove,nil)==gc end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,gc,0,0)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local gc=#g
+	if gc>0 and g:FilterCount(Card.IsAbleToRemove,nil)==gc then
+		local oc=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		if oc>0 then
+			Duel.SendtoHand(og,p,REASON_EFFECT)
+		end
+	end
+end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x749) and c:IsAbleToHand()
 end
