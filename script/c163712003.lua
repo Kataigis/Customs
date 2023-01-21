@@ -28,7 +28,5 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(s.tffilter,tp,LOCATION_HAND,0,nil,tp)
-	end
+	Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
 end
