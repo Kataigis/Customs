@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_DECK)
@@ -54,17 +54,17 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x749) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x749) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-	end
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	if not tc then return end
+	tc:SetMaterial(nil)
 end
