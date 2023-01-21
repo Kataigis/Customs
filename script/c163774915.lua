@@ -30,13 +30,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x749}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local gc=#g
 	if chk==0 then return gc>0 and g:FilterCount(Card.IsAbleToRemove,nil)==gc end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,gc,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local gc=#g
 	if gc>0 and g:FilterCount(Card.IsAbleToRemove,nil)==gc then
 		local oc=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
