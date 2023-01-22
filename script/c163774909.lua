@@ -70,7 +70,20 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
-	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	local tc=g:GetFirst()
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+		local fid=c:GetFieldID()
+		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetCountLimit(1)
+		e1:SetLabel(fid)
+		e1:SetLabelObject(tc)
+		e1:SetCondition(s.thcon2)
+		e1:SetOperation(s.thop2)
+		Duel.RegisterEffect(e1,tp)
 	end
+	Duel.SpecialSummonComplete()
 end
