@@ -2,7 +2,7 @@
 --Kataigis
 local s,id=GetID()
 function s.initial_effect(c)
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x1047),matfilter=aux.FALSE,
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x749),matfilter=aux.FALSE,
 		extrafil=s.fextra,extraop=Fusion.ShuffleMaterial,stage2=s.stage2,extratg=s.extratarget}
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e1)
 end
+s.listed_series={0x749}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
