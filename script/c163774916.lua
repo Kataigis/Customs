@@ -17,7 +17,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.bnop)
 	c:RegisterEffect(e1)
 	--recover
-	
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_TO_DECK)
+	e2:SetRange(LOCATION_EXTRA)
+	e2:SetCountLimit(1,{id,1})
+	e2:SetCondition(s.rccon)
+	e2:SetTarget(s.rctg)
+	e2:SetOperation(s.rcop)
+	c:RegisterEffect(e2)
 end
 s.listed_series={0x749}
 function s.bnfilter(c)
@@ -41,5 +52,24 @@ function s.bnop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
+	end
+end
+function s.rccon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
+end
+function s.rcfilter(c,e,tp)
+	return c:IsFaceup() and c:IsSetCard(0x749) and c:IsAbleToHand()
+end
+function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rcfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+end
+function s.rcop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
