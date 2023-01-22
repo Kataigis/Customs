@@ -28,12 +28,12 @@ function s.oppfilter(c,p,eg)
 end
 function s.bntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.oppfilter(chkc,1-tp,eg) end
-	if chk==0 then return Duel.IsExistingTarget(s.bnfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingTarget(s.bnfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and Duel.IsExistingTarget(s.oppfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,1-tp,eg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g1=Duel.SelectTarget(tp,s.bnfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	local g1=Duel.SelectTarget(tp,s.bnfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g2=Duel.SelectTarget(tp,s.oppfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g2=Duel.SelectTarget(tp,s.oppfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,1-tp,eg)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
 end
