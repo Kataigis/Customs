@@ -4,20 +4,51 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Atk
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR))
-	e2:SetValue(300)
-	c:RegisterEffect(e2)
-	--Def
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_UPDATE_DEFENSE)
-	c:RegisterEffect(e3)
+end
+s.listed_series={0x749}
+function s.actfilter1(c)
+	return c:IsMonster() and c:IsSetCard(0x749)
+end
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(s.actfilter1,tp,LOCATION_DECK,0,nil)
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.Remove(sg,nil,REASON_EFFECT)
+		Duel.BreakEffect()
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCountLimit(1)
+		e1:SetLabel(Duel.GetTurnCount())
+		e1:SetCondition(s.actcon1)
+		e1:SetOperation(s.actop1)
+		if Duel.IsTurnPlayer(tp) then
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		else
+			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		end
+		Duel.RegisterEffect(e1,tp)
+	end
+end
+function s.actcon1(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnCount()~=e:GetLabel()
+end
+function s.actfilter2(c,e,tp)
+	return c:IsSetCard(0x749) and c:IsAbleToHand()
+end
+function s.actop1(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,s.actfilter2,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end
