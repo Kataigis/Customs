@@ -3,6 +3,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fuse
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x749),matfilter=aux.FALSE,extrafil=s.fextra,
+			extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -12,8 +14,8 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.fucon)
-	e1:SetTarget(s.futg)
-	e1:SetOperation(s.fuop)
+	e1:SetTarget(Fusion.SummonEffTG(params))
+	e1:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e1)
 	--Special Summon from the hand
 	local e2=Effect.CreateEffect(c)
@@ -35,12 +37,6 @@ s.listed_names={id}
 function s.fucon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
-end
-function s.futg(e,tp,eg,ep,ev,re,r,rp,chk)
-	
-end
-function s.fuop(e,tp,eg,ep,ev,re,r,rp)
-	
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x749) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
