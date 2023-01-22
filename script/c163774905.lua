@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x749}
