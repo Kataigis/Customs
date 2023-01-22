@@ -38,6 +38,9 @@ function s.fucon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
 end
+function s.fextra(e,tp,mg)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE+LOCATION_HAND,0,nil)
+end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x749) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
