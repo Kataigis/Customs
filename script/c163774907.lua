@@ -54,7 +54,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x749) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x749) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
