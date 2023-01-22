@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fuse
 	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x749),matfilter=aux.FALSE,extrafil=s.fextra,
-			extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratarget}
+			extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
