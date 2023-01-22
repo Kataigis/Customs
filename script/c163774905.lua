@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.srop)
 	c:RegisterEffect(e1)
 	--fuse
-	local params = {aux.FilterBoolFunction(Card.IsSetCode,0x749)}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x749)}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
