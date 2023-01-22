@@ -39,10 +39,14 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_TO_HAND)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,id)
-	e4:SetCondition(s.spcon)
+	e4:SetCondition(s.hspcon)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetCode(EVENT_TO_DECK)
+	e5:SetCondition(s.dspcon)
+	c:RegisterEffect(e5)
 end
 s.listed_series={0x749}
 function s.indval(e,re,tp)
@@ -52,13 +56,27 @@ function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end
 
-function s.cfilter(c,tp)
+
+
+function s.hfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsSetCard(0x749) and (c:IsMonster() or c:IsPreviousLocation(LOCATION_MZONE)) and c:IsReason(REASON_EFFECT)
+		and c:IsSetCard(0x749) and c:IsReason(REASON_EFFECT)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.hfilter,1,nil,tp)
 end
+
+
+function s.dfilter(c,tp)
+	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsSetCard(0x749) and c:IsReason(REASON_EFFECT) and c:IsType(TYPE_FUSION)
+end
+function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.dfilter,1,nil,tp)
+end
+
+
+
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x749) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
