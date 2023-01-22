@@ -24,12 +24,12 @@ function s.bnfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x749) and c:IsAbleToHand()
 end
 function s.oppfilter(c,p,eg)
-	return c:IsSummonPlayer(p) and eg:IsContains(c)
+	return c:IsSummonPlayer(p) and eg:IsContains(c) and c:IsFaceup()
 end
 function s.bntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.oppfilter(chkc,1-tp,eg) end
 	if chk==0 then return Duel.IsExistingTarget(s.bnfilter,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
-		and Duel.IsExistingTarget(s.oppfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(s.oppfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,1-tp,eg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g1=Duel.SelectTarget(tp,s.bnfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
