@@ -48,7 +48,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	Duel.SendtoHand(og,p,REASON_EFFECT)
 end
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED)
