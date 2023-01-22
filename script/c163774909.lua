@@ -2,6 +2,10 @@
 --Kataigis
 local s,id=GetID()
 function s.initial_effect(c)
+	--Fusion Summon procedure
+	c:EnableReviveLimit()
+	Fusion.AddProcFunRep(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x749),4,true)
+	--unique clause
 	c:SetUniqueOnField(1,0,id)
 	--cannot be returned to the extra
 	local e1=Effect.CreateEffect(c)
