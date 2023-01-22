@@ -10,7 +10,23 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
+	--place counters
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_TO_HAND)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetRange(LOCATION_FZONE)
+	e2:SetCondition(s.ctcon)
+	e2:SetOperation(s.ctop)
+	c:RegisterEffect(e2)
+	--atk drop
+	
+	--def drop
+	
+	--reborn
+	
 end
+s.counter_place_list={0x16}
 s.listed_series={0x749}
 function s.actfilter1(c)
 	return c:IsMonster() and c:IsSetCard(0x749)
@@ -51,4 +67,14 @@ function s.actop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+end
+function s.cfilter(c)
+	return c:IsSetCard(0x749) and c:IsMonster() and (c:IsPreviousLocation(LOCATION_ONFIELD) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED))
+end
+function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.cfilter,1,nil)
+end
+function s.ctop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=eg:FilterCount(s.cfilter,nil)
+	e:GetHandler():AddCounter(0x16,ct)
 end
