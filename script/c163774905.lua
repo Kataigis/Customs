@@ -51,3 +51,6 @@ function s.srop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+function s.fextra(e,tp,mg)
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsFaceup),tp,0,LOCATION_HAND+LOCATION_ONFIELD,nil)
+end
