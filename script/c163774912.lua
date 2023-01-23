@@ -119,7 +119,7 @@ end
 
 
 
-function s.tgfilter(c,cc,tp,e)
+function s.tgfilter(c,tp,e)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) 
 		and c:IsFaceup() and c:IsSetCard(0x749) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsCanBeEffectTarget(e)
