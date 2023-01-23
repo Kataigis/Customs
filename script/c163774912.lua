@@ -102,11 +102,6 @@ end
 function s.val(e)
 	return e:GetHandler():GetCounter(0x16)*-100
 end
-
-
-
-
-
 function s.spfilter(c,cc,e,tp)
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousSetCard(0x749) and c:IsMonster()
