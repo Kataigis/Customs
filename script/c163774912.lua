@@ -21,9 +21,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ctop)
 	c:RegisterEffect(e2)
 	--atk drop
-	
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetTargetRange(0,LOCATION_MZONE)
+	e3:SetValue(s.val)
+	c:RegisterEffect(e3)
 	--def drop
-	
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e4)
 	--reborn
 	
 end
@@ -80,4 +88,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 then
 		e:GetHandler():AddCounter(0x16,ct)
 	end
+end
+function s.val(e)
+	return e:GetHandler():GetCounter(0x16)*-100
 end
