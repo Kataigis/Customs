@@ -32,8 +32,30 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--reborn
-	
+	--Special Summon 1 destroyed monster
+	local e5a=Effect.CreateEffect(c)
+	e5a:SetDescription(aux.Stringid(id,1))
+	e5a:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e5a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e5a:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
+	e5a:SetCode(EVENT_CUSTOM+id)
+	e5a:SetRange(LOCATION_FZONE)
+	e5a:SetCountLimit(1,id)
+	e5a:SetTarget(s.sptg)
+	e5a:SetOperation(s.spop)
+	c:RegisterEffect(e5a)
+	local g=Group.CreateGroup()
+	g:KeepAlive()
+	e5a:SetLabelObject(g)
+	--Register the destuction of monsters
+	local e5b=Effect.CreateEffect(c)
+	e5b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5b:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e5b:SetCode(EVENT_DESTROYED)
+	e5b:SetRange(LOCATION_FZONE)
+	e5b:SetLabelObject(e3a)
+	e5b:SetOperation(s.regop)
+	c:RegisterEffect(e5b)
 end
 s.counter_place_list={0x16}
 s.listed_series={0x749}
@@ -92,4 +114,52 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.val(e)
 	return e:GetHandler():GetCounter(0x16)*-100
+end
+
+
+
+
+function s.tgfilter(c,cc,tp,e)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) 
+		and c:IsFaceup() and c:IsSetCard(0x749) and c:IsPreviousControler(tp)
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsCanBeEffectTarget(e)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and cc:IsCanRemoveCounter(tp,COUNTER_SPELL,c:GetLevel(),REASON_COST)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
+	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,e:GetHandler(),tp,e) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	local tc=nil
+	if #g==1 then
+		tc=g:GetFirst()
+		Duel.SetTargetCard(tc)
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		tc=g:Select(tp,1,1,nil)
+		Duel.SetTargetCard(tc)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,0)
+end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	end
+end
+function s.regop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFlagEffect(tp,id)>0 then return end
+	local tg=eg:Filter(s.tgfilter,nil,e:GetHandler(),tp,e)
+	if #tg>0 then
+		for tc in tg:Iter() do
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+		end
+		local g=e:GetLabelObject():GetLabelObject()
+		if Duel.GetCurrentChain()==0 then g:Clear() end
+		g:Merge(tg)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
+		e:GetLabelObject():SetLabelObject(g)
+		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
+	end
 end
