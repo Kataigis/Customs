@@ -82,10 +82,10 @@ function s.cfilter(c,tp)
 		(c:IsPreviousLocation(LOCATION_MZONE) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED))
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil)
+	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=eg:FilterCount(s.cfilter,nil)
+	local ct=eg:FilterCount(s.cfilter,nil,tp)
 	if ct>0 then
 		e:GetHandler():AddCounter(0x16,ct)
 	end
