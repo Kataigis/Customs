@@ -117,9 +117,9 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.spfilter(chkc,e:GetHandler(),e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and eg:IsExists(s.spfilter,1,nil,e,tp) end
+		and eg:IsExists(s.spfilter,1,nil,e:GetHandler(),e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=eg:FilterSelect(tp,s.spfilter,1,1,nil,e,tp)
+	local g=eg:FilterSelect(tp,s.spfilter,1,1,nil,e:GetHandler(),e,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE+LOCATION_REMOVED)
 end
