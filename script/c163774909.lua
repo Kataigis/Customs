@@ -55,9 +55,6 @@ end
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
 end
-
-
-
 function s.hfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsSetCard(0x749) and c:IsReason(REASON_EFFECT)
@@ -65,8 +62,6 @@ end
 function s.hspcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.hfilter,1,nil,tp)
 end
-
-
 function s.dfilter(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsSetCard(0x749) and c:IsReason(REASON_EFFECT) and c:IsType(TYPE_FUSION)
@@ -74,9 +69,6 @@ end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.dfilter,1,nil,tp)
 end
-
-
-
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(0x749) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -90,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local fid=c:GetFieldID()
 		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
