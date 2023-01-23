@@ -124,11 +124,10 @@ function s.tgfilter(c,cc,tp,e)
 		and c:IsFaceup() and c:IsSetCard(0x749) and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsCanBeEffectTarget(e)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and cc:IsCanRemoveCounter(tp,COUNTER_SPELL,c:GetLevel(),REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetLabelObject():Filter(s.tgfilter,nil,tp,e)
-	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,e:GetHandler(),tp,e) end
+	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,tp,e) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g>0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 	local tc=nil
@@ -150,7 +149,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)>0 then return end
-	local tg=eg:Filter(s.tgfilter,nil,e:GetHandler(),tp,e)
+	local tg=eg:Filter(s.tgfilter,nil,tp,e)
 	if #tg>0 then
 		for tc in tg:Iter() do
 			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
