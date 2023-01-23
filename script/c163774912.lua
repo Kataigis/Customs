@@ -107,14 +107,15 @@ end
 
 
 
-function s.spfilter(c,e,tp)
+function s.spfilter(c,cc,e,tp)
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousSetCard(0x749) and c:IsMonster()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
+		and cc:IsCanRemoveCounter(tp,0x16,c:GetLevel(),REASON_EFFECT)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return eg:IsContains(chkc) and s.spfilter1(chkc,e,tp) end
+	if chkc then return eg:IsContains(chkc) and s.spfilter(chkc,e:GetHandler(),e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and eg:IsExists(s.spfilter,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -123,8 +124,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
+	Duel.RemoveCounter(tp,1,0,0x16,tc:GetLevel(),REASON_EFFECT)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not tc:IsRelateToEffect(e) then return end
 	if tc and tc:IsRelateToEffect(e) then
