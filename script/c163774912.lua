@@ -77,7 +77,7 @@ function s.actop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.cfilter(c)
+function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsSetCard(0x749) and c:IsMonster() and 
 		(c:IsPreviousLocation(LOCATION_MZONE) or c:IsPreviousLocation(LOCATION_GRAVE) or c:IsPreviousLocation(LOCATION_REMOVED))
 end
